@@ -159,6 +159,7 @@ Devise.setup do |config|
   config.omniauth :facebook, "232193500233565", "d7d043200598a9a81074d24ba0656398",:client_options => {:ssl => {:ca_path => '/etc/ssl/certs'}}
   config.omniauth :linkedin, "szojbrb1rmct", "4e9xQcJET33lVvfk"
   config.omniauth :twitter, "9rgPKpQJil0ZaPgSVCeprw", "WB9tAjq11TDLXPKvpTjGF1PkemjzyNnIt1iG3nKSU", :strategy_class => OmniAuth::Strategies::Twitter
+
   # Time interval you can reset your password with a reset password key.
   # Don't put a too small interval or your users won't have the time to
   # change their passwords.
