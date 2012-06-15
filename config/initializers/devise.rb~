@@ -156,7 +156,7 @@ Devise.setup do |config|
   #
   # Defines which key will be used when recovering the password for an account
   # config.reset_password_keys = [ :email ]
-  config.omniauth :facebook, "232193500233565", "d7d043200598a9a81074d24ba0656398",:client_options => {:ssl => {:ca_path => '/etc/ssl/certs'}}
+  config.omniauth :facebook, "232193500233565", "d7d043200598a9a81074d24ba0656398",{:scope => 'publish_stream, offline_access', :client_options => {:ssl => {:ca_file => '/usr/lib/ssl/certs/ca-certificates.crt'}}}
   config.omniauth :linkedin, "szojbrb1rmct", "4e9xQcJET33lVvfk"
   config.omniauth :twitter, "9rgPKpQJil0ZaPgSVCeprw", "WB9tAjq11TDLXPKvpTjGF1PkemjzyNnIt1iG3nKSU", :strategy_class => OmniAuth::Strategies::Twitter
 

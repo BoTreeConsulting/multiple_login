@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  trade_players: MyString
+  hits: 1
+  runs: 1
+  outs: 1
+  inning: 1
+  on_base: MyString
+  outfielders: MyString
+  at_bat: MyString
+  pitchers_faced: MyString
+
+two:
+  trade_players: MyString
+  hits: 1
+  runs: 1
+  outs: 1
+  inning: 1
+  on_base: MyString
+  outfielders: MyString
+  at_bat: MyString
+  pitchers_faced: MyString

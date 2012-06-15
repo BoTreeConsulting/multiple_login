@@ -1,9 +1,10 @@
 MultipleLogin::Application.routes.draw do
   get "home/index"
+	match "/feed" => "home#facefeed"
 	devise_scope :user do
+		match 'users/sign_out' => 'devise/sessions#destroy'
 	end
 	devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" } do
-		match 'users/sign_out' => 'devise/sessions#destroy'
 	end
 
   # The priority is based upon order of creation:

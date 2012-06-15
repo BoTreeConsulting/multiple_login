@@ -1,5 +1,6 @@
 MultipleLogin::Application.routes.draw do
   get "home/index"
+	match "/feed" => "home#facefeed"
 	devise_scope :user do
 		match 'users/sign_out' => 'devise/sessions#destroy'
 	end

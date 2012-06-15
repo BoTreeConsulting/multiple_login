@@ -1,13 +1,13 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
-
+	require 'koala'
   def facebook
 		data = request.env["omniauth.auth"].extra.raw_info
-		@graph = Koala::Facebook::API.new(request.env["omniauth.auth"].credentials.token)
-		profile = @graph.get_object("me")
-		mutualfriends = @graph.get_connections("me", "mutualfriends/630625736")
-#		@graph.put_connections("me", "feed", :message => "Hello ...all!")
-		render :text => profile.inspect and return false
-		@email = data.email
+		session[:access_token] = request.env["omniauth.auth"].credentials.token
+		if data.email.nil?
+				@email = data.link
+		else
+			@email = data.email
+		end
 		if @user = User.find_by_email(@email)
 			@user
 		else # Create a user with a stub password.

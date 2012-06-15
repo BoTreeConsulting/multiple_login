@@ -11,4 +11,56 @@
 <%if user_signed_in?%>
 	<%=flash[:notice]%>
 	<%=link_to "Logout","users/sign_out"%>
+	<%=image_tag("#{session[:image]}")%>
+<%=form_tag "/feed" do %>
+	<%=text_area_tag("feed","")%>
+<%end%>
+
+
+<table width="50%" border="1">
+	<tr>
+		<th>
+			Name
+		</th>
+		<th>
+			BirthDay
+		</th>
+		<th>
+			Id
+		</th>
+	</tr>
+	<%=current_month_date = Date.today.strftime('%m-%d-%Y').to_s.split('-')%>
+	<%@result = []%>
+	<%@upcomming_birthday=[]%>
+	<%@friends_profile.each do |friend|%>
+		<tr>
+			<td>
+				<%=friend["name"]%>
+			</td>
+			<td>
+				<%if !friend["birthday"].nil?%>
+					<%=birthday = friend["birthday"].split('/')%>
+					<%if birthday[0] == current_month_date[0]%>
+							<%if birthday[1] == current_month_date[1]%>
+								<%@result << friend["name"] %>
+							<%end%>
+							<%if birthday[1].to_i > current_month_date[1].to_i && birthday[1].to_i<=(current_month_date[1].to_i+5)%>
+								<%@data= {}%>
+								<%@data["name"]=friend["name"]%>
+								<%@data["birthday"] = birthday[1]%>
+								<%@upcomming_birthday << @data%>
+							<%end%>
+					<%end%>
+				<%else%>
+					<%=friend["birthday"]%>
+				<%end%>
+			</td>
+			<td>
+				<%=friend["id"]%>
+			</td>
+		</tr>
+	<%end%>
+</table>
+<%=@result.inspect%><br>
+<%=@upcomming_birthday.inspect%>
 <%end%>
