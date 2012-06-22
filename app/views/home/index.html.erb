@@ -16,10 +16,10 @@
 		<%=text_area_tag("feed","")%>
 		<%=submit_tag("Post on Facebook wall")%>
 	<%end%>
-	<%current_date = Date.today.strftime('%m-%d-%Y').split('-')%>
+	<%=current_date = Date.today.strftime('%m-%d-%Y').split('-')%>
 	<%@today_birthday = []%>
 	<%@result = []%>
-	<%upcomming = current_date[1].to_i+5%>
+	<%=upcomming = current_date[1].to_i+5%>
 <!--
 	<table border="1" width="50%" align="center">
 		<tr>
@@ -47,10 +47,10 @@
 -->
 									<!--Date is same-->
 <!--
-										<%@today_birthday <<  {"name" => friend["name"],"birthday" => friend["birthday"],"id" => friend["id"]}%>
+										<%@today_birthday <<  {"name" => friend["name"],"birthday" => birthday[1],"id" => friend["id"]}%>
 								<%end%>
 								<%if birthday[1].to_i > current_date[1].to_i && birthday[1].to_i < upcomming%>
-									<%@result << {"name" => friend["name"],"birthday" => friend["birthday"],"id" => friend["id"]} %>
+									<%@result << {"name" => friend["name"],"birthday" => birthday[1],"id" => friend["id"]} %>
 								<%end%>
 						<%end%>
 					<%else%>
@@ -74,7 +74,7 @@
 				Name
 			</th>
 			<th>
-				BirthDay
+				BirthDate
 			</th>
 			<th>
 				ID
@@ -98,11 +98,7 @@
 	</table>
 
 	<table border="1" width="50%" align="center">
-		<tr>
-			<td colspan="3" align="center">
-				&nbsp;
-			</td>
-		</tr>
+
 		<tr>
 			<td colspan="3" align="center">
 				<strong>Upcomming BirthDay</strong>
@@ -113,7 +109,7 @@
 				Name
 			</th>
 			<th>
-				BirthDay
+				BirthDate
 			</th>
 			<th>
 				ID
