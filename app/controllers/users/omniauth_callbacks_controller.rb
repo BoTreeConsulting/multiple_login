@@ -28,7 +28,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
 	def linkedin
+
 		data = request.env["omniauth.auth"].extra.raw_info
+#		render :text => request.env["omniauth.auth"].inspect and return false
 		@email = data.publicProfileUrl
 		if @user = User.find_by_email(@email)
 			@user
@@ -50,9 +52,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 	end
 
 	def twitter
+		render :text => request.env["omniauth.auth"].inspect and return false
 		@email = request.env["omniauth.auth"].info.nickname
 		@secret = request.env["omniauth.auth"]['credentials']['secret']
 		@token = request.env["omniauth.auth"]['credentials']['token']
+
 		if @user = User.find_by_email(@email)
 			@user
 		else # Create a user with a stub password.

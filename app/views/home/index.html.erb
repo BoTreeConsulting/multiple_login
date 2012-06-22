@@ -6,62 +6,134 @@
   <p><%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook) %></p>
 	<p><%= link_to "Sign in with LinkedIn", user_omniauth_authorize_path(:linkedin) %></p>
 	<p><%= link_to "Sign in with Twitter", user_omniauth_authorize_path(:twitter) %></p>
-
+	<p><%=link_to "Team",:controller=>"home",:action=>"team"%></p>
 <% end -%>
 <%if user_signed_in?%>
 	<%=flash[:notice]%>
 	<%=link_to "Logout","users/sign_out"%>
 	<%=image_tag("#{session[:image]}")%>
-<%=form_tag "/feed" do %>
-	<%=text_area_tag("feed","")%>
-	<%=submit_tag("Post on Facebook wall")%>
-<%end%>
-
-
-<table width="50%" border="1">
-	<tr>
-		<th>
-			Name
-		</th>
-		<th>
-			BirthDay
-		</th>
-		<th>
-			Id
-		</th>
-	</tr>
-	<%=current_month_date = Date.today.strftime('%m-%d-%Y').to_s.split('-')%>
+	<%=form_tag "/feed" do %>
+		<%=text_area_tag("feed","")%>
+		<%=submit_tag("Post on Facebook wall")%>
+	<%end%>
+	<%current_date = Date.today.strftime('%m-%d-%Y').split('-')%>
+	<%@today_birthday = []%>
 	<%@result = []%>
-	<%@upcomming_birthday=[]%>
-	<%@friends_profile.each do |friend|%>
+	<%upcomming = current_date[1].to_i+5%>
+<!--
+	<table border="1" width="50%" align="center">
 		<tr>
-			<td>
+			<th>
+				Name
+			</th>
+			<th>
+				BirthDay
+			</th>
+			<th>
+				ID
+			</th>
+		</tr>
+		<%@friends_profile.each do |friend|%>
+		<tr>
+				<td><%=friend["name"]%></td>
+				<td>
+					<%if !friend["birthday"].nil?%>
+						<%=birthday = friend["birthday"].split('/')%>
+						<%if current_date[0] == birthday[0]%>
+-->
+							<!--month is same-->
+<!--
+								<%if current_date[1]==birthday[1]%>
+-->
+									<!--Date is same-->
+<!--
+										<%@today_birthday <<  {"name" => friend["name"],"birthday" => friend["birthday"],"id" => friend["id"]}%>
+								<%end%>
+								<%if birthday[1].to_i > current_date[1].to_i && birthday[1].to_i < upcomming%>
+									<%@result << {"name" => friend["name"],"birthday" => friend["birthday"],"id" => friend["id"]} %>
+								<%end%>
+						<%end%>
+					<%else%>
+						<%=friend["birthday"]%>
+					<%end%>
+				</td>
+				<td><%=friend["id"]%></td>
+		</tr>
+		<%end%>
+	</table>
+-->
+
+	<table border="1" width="50%" align="center">
+		<tr>
+			<td colspan="3" align="center">
+				<strong>Today's BirthDay</strong>
+			</td>
+		</tr>
+		<tr>
+			<th>
+				Name
+			</th>
+			<th>
+				BirthDay
+			</th>
+			<th>
+				ID
+			</th>
+
+		</tr>
+
+		<%@today_birthday.each do |friend|%>
+		<tr>
+			<td align="center">
 				<%=friend["name"]%>
 			</td>
-			<td>
-				<%if !friend["birthday"].nil?%>
-					<%=birthday = friend["birthday"].split('/')%>
-					<%if birthday[0] == current_month_date[0]%>
-							<%if birthday[1] == current_month_date[1]%>
-								<%@result << friend["name"] %>
-							<%end%>
-							<%if birthday[1].to_i > current_month_date[1].to_i && birthday[1].to_i<=(current_month_date[1].to_i+5)%>
-								<%@data= {}%>
-								<%@data["name"]=friend["name"]%>
-								<%@data["birthday"] = birthday[1]%>
-								<%@upcomming_birthday << @data%>
-							<%end%>
-					<%end%>
-				<%else%>
-					<%=friend["birthday"]%>
-				<%end%>
+			<td align="center">
+				<%=friend["birthday"]%>
 			</td>
-			<td>
+			<td align="center">
 				<%=friend["id"]%>
 			</td>
 		</tr>
-	<%end%>
-</table>
-<%=@result.inspect%><br>
-<%=@upcomming_birthday.inspect%>
+		<%end%>
+	</table>
+
+	<table border="1" width="50%" align="center">
+		<tr>
+			<td colspan="3" align="center">
+				&nbsp;
+			</td>
+		</tr>
+		<tr>
+			<td colspan="3" align="center">
+				<strong>Upcomming BirthDay</strong>
+			</td>
+		</tr>
+		<tr>
+			<th>
+				Name
+			</th>
+			<th>
+				BirthDay
+			</th>
+			<th>
+				ID
+			</th>
+		</tr>
+
+		<%@result.each do |friend|%>
+		<tr>
+			<td align="center">
+				<%=friend["name"]%>
+			</td>
+			<td align="center">
+				<%=friend["birthday"]%>
+			</td>
+			<td align="center">
+				<%=friend["id"]%>
+			</td>
+		</tr>
+		<%end%>
+	</table>
+
+
 <%end%>
